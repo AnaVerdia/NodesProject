@@ -1,0 +1,46 @@
+public class Node {
+	private String value;
+	private Node next;
+
+	public Node(String nodeWord){
+		value = nodeWord;
+		next = null;
+	}
+
+	public void display(){ //displays the node
+		System.out.print(value);
+		System.out.print("\t");
+		
+	}
+
+	public void setValue(String nodeWord){
+		value = nodeWord;
+	}
+
+	public Node getNode(int location){ //get a word at a specific index
+        if (location == 1) {
+            return this;
+        }
+        else if(next == null)
+        {
+            System.out.println("No more available nodes");
+            return null;
+        }
+        else {
+            return next.getNode(location - 1);
+        }
+		
+	}
+
+	public Node getNext(){
+		return next;
+	}
+
+	public String getValue(){ //gets a node at a specific value 
+		return value;
+	}
+
+	public void setNext(Node word){
+		next = word;
+	}
+} 
