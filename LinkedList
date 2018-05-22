@@ -1,0 +1,131 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class LinkedList {
+	private Node head;
+
+	public LinkedList(){
+		head = null;
+	}
+
+	public void remove(int r){// removes a node from a specific index
+		if (r<= 0 || r> getCount()){
+			System.out.println("Item not found");
+		}
+		else if (getCount() == 0){
+			System.out.println("This list is empty");
+		}
+		else{
+			if (r == 1){
+				head = head.getNext();
+			}
+			else{
+				int count =1;
+				Node temp = head;
+				Node prev = null;
+				while (count < r){
+					prev = temp;
+					temp = temp.getNext();
+					
+					
+					count ++;
+				}
+				prev.setNext(temp.getNext());
+			}
+		}
+	}
+
+	public void addToFront(String word){ //adds a word to the front of the list 
+		Node temp = new Node(word);
+		temp.setNext(head);
+		head = temp;
+	}
+
+	public void addToRear(String word){ //adds a node to the end of the array
+		Node temp = new Node(word);
+		Node traverse =  head;
+		while (traverse.getNext() != null){
+			traverse = traverse.getNext();
+		}
+		traverse.setNext(temp);
+	}
+
+	public int addInOrder(String word){//adds word in correct order 
+		int positionInsertedAt = 1;
+        Node temp = new Node(word);
+
+        // If the list is empty
+        if (head == null){
+            head = temp;
+        }
+        // check if the head is higher up in alphabetical order
+        // if so then make then then place the new word as the head and give a next reference
+        // to the former head
+        else if ((temp.getValue()).compareTo(head.getValue()) < 0){ //compare returns a negative value if
+            temp.setNext(head);
+            head = temp;
+        }
+        // otherwise traverse the linked list
+        else {
+            Node previous = null;
+            Node traverse = head;
+            while ((temp.getValue()).compareTo(traverse.getValue()) > 0){
+                previous = traverse;
+                traverse = traverse.getNext();
+                positionInsertedAt++;
+
+                if (traverse == null){
+                    break;
+                }
+            }
+            previous.setNext(temp);
+            temp.setNext(traverse);
+        }
+        return positionInsertedAt;
+    }
+	public void display(int n){
+		// displays the list
+		// When the user wants to remove a node, the integer is put in to 
+		// display the node being removed
+		System.out.println("\t");
+		Node temp = head;
+		int count = 0;
+		if (n == 0 ){
+			while (temp != null){
+				temp.display();
+				temp = temp.getNext();
+				count++;
+
+				if (count%10 == 0){
+					System.out.println();
+				}
+			}
+		}
+		else if (n > 0){
+			while (temp != null){
+				if (count == n -1){ //adds "*" to key word
+					System.out.print("*");
+				}
+				
+				temp.display();
+				temp = temp.getNext();
+				count++;
+				
+				if (count%10 == 0){ //formats so that there are 10 columns 
+					System.out.println();
+				}
+			}
+		}
+	}
+	
+	public int getCount(){ //Gives you the size of the linked list
+		Node temp = head;
+		int count = 0;
+		while (temp != null){
+			temp = temp.getNext();
+			count ++;
+		}
+		return count;
+	}
+}
